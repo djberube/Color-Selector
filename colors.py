@@ -1,4 +1,4 @@
-import arcade, logging
+import arcade, logging, random
 from collections import namedtuple as nt
 
 LOG_LEVEL = "INFO"
@@ -25,8 +25,20 @@ class GameView(arcade.Window):
         self.background_color = arcade.csscolor.BLACK
         self.hello_world = arcade.Text("Hello World!",game_info.screen_width/2,game_info.screen_height/2)
 
+        #gets the names of all the Colors:
+        self.csscolors_list = [
+            key for key, value in arcade.csscolor.__dict__.items()
+            if not key.startswith("__")
+            ]
+        
+        self.colors_list = [
+            key for key, value in arcade.color.__dict__.items()
+            if not key.startswith("__")
+            ]
+
     def setup(self):
-        pass
+        background = random.choice(self.csscolors_list)
+        self.background_color = getattr(arcade.csscolor, background)
 
     def on_update(self,delta_time):
         pass
@@ -34,6 +46,10 @@ class GameView(arcade.Window):
     def on_draw(self):
         self.clear()
         self.hello_world.draw()
+
+
+
+
 
 
 
